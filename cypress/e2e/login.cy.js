@@ -14,7 +14,7 @@ describe('Login no hub de leitura', () => {
   })
 
   it('Deve fazer login com sucesso com usuário admin - usando comando customizado', () => {
-    cy.login('admin@biblioteca.com', 'admin123')
+    cy.login(Cypress.env('ADMIN_EMAIL'), Cypress.env('ADMIN_SENHA'))
     cy.get('h1').should('contain', 'Painel Administrativo')
   })
 
