@@ -35,7 +35,7 @@ describe('Login no hub de leitura', () => {
 
     })
 
-    it.only('Deve fazer login com sucesso com usuário comum - setando o token', () => {
+    it('Deve fazer login com sucesso com usuário comum - setando o token', () => {
         let token = "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJ1c3VhcmlvQHRlc3RlLmNvbSIsImlzQWRtaW4iOmZhbHNlLCJpYXQiOjE3ODMzNzg4ODcsImV4cCI6MTc4MzQwNzY4N30.QJtZ7gQLJinKJH6gU7GZXxmtVUBej_Z3WmKvMKQyyBY"
         window.localStorage.setItem('authToken', token)
 
@@ -44,7 +44,19 @@ describe('Login no hub de leitura', () => {
     })
 
     it('Deve fazer login com sucesso com usuário admin', () => {
+        cy.setCookie('jwt_education_shown', 'true')
+
         cy.login('admin@biblioteca.com', 'admin123')
         cy.get('h1').should('contain', 'Painel Administrativo')
+
+        // cy.wait(10000)
+        // cy.clearCookie('jwt_education_shown')
+        // cy.reload()
+    })
+
+    it.skip('Deve mudar o idioma do site da EBAC via cookie', () => {
+        cy.visit('https://lms.ebaconline.com.br/')
+        cy.setCookie('i18n_redirected', 'en')
+        cy.reload()
     })
 })
