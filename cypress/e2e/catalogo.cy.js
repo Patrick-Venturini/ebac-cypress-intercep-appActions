@@ -1,5 +1,3 @@
-import livros from '../fixtures/books.json'
-
 describe('Funcionalidade: Catalogo de Livros', () => {
     beforeEach(() => {
         cy.loginApp(Cypress.env('ADMIN_EMAIL'), Cypress.env('ADMIN_SENHA'))
@@ -23,16 +21,19 @@ describe('Funcionalidade: Catalogo de Livros', () => {
     //é esperado que seja exibida uma mensagem de erro na UI, porém esta sendo exibida uma mensagem
     //de sucesso.
     it('Deve tentar cadastrar um livro já existente como admin - Cenário negatio + app actions', () => {
-        cy.intercept('POST', 'api/books', {
-            statusCode: 400,
-            body: {
-                message: 'Já existe um livro com este título e autor.'
-            }
-        }).as('errorPost')
+        cy.fixture('books').then((dadosBooks) => {
+            cy.intercept('POST', 'api/books', {
+                statusCode: 400,
+                body: {
+                    message: 'Já existe um livro com este título e autor.'
+                }
+            }).as('errorPost')
 
-        cy.visit('admin-books.html')
-        cy.adicionarLivro(livros.books[0].title, livros.books[0].author, livros.books[0].category)
-        cy.wait('@errorPost')
-        cy.get('#alert-container').should('contain', 'Já existe um livro com este título e autor.')
+            cy.visit('admin-books.html')
+            cy.adicionarLivro(dadosBooks.books[0].title, dadosBooks.books[0].author, dadosBooks.books[0].category)
+            cy.wait('@errorPost')
+            cy.get('#alert-container').should('contain', 'Já existe um livro com este título e autor.')
+        })
     })
+
 })
