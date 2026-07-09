@@ -1,7 +1,7 @@
 describe('Funcionalidade: Administrar Reservas de livros', () => {
 
     beforeEach(() => {
-        cy.loginApp(Cypress.env('USER_EMAIL'), Cypress.env('USER_SENHA'))
+        cy.loginApp(Cypress.env('ADMIN_EMAIL'), Cypress.env('ADMIN_SENHA'))
         //cy.loginToken(Cypress.env('TOKEN_COMUM'))
     })
 

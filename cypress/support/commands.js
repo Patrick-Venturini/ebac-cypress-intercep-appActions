@@ -36,24 +36,22 @@ Cypress.Commands.add('login', (email, senha, sucesso = true) => {
 })
 
 Cypress.Commands.add('loginApp', (email, senha) => {
-    it('Deve fazer login com sucesso com usuário comum - via api', () => {
-        cy.request({
-            method: 'POST',
-            url: 'api/login',
-            body: {
-                "email": email,
-                "password": senha,
-            }
-        }).then((response) => {
-            expect(response.status).to.equal(200)
+    cy.log(`Email: ${email}`)
+    cy.log(`Senha: ${senha}`)
+    cy.request({
+        method: 'POST',
+        url: 'api/login',
+        body: {
+            "email": email,
+            "password": senha
+        }
+    }).then((response) => {
+        expect(response.status).to.equal(200)
+        //Criar o estado da aplicação 
+        window.localStorage.setItem('authToken', response.body.token)
 
-            //Criar o estado da aplicação
-            window.localStorage.setItem('authToken', response.body.token)
-
-            cy.visit('dashboard.html')
-            cy.get('h4').should('contain', 'Olá')
-        })
-
+        cy.visit('dashboard.html')
+        cy.get('h4').should('contain', 'Olá')
     })
 })
 

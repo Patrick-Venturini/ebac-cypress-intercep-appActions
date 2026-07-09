@@ -1,2 +1,3 @@
 node_modules/
 cypress.env.prod.json
+cypress.env.json
