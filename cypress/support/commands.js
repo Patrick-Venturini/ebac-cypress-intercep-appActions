@@ -36,8 +36,6 @@ Cypress.Commands.add('login', (email, senha, sucesso = true) => {
 })
 
 Cypress.Commands.add('loginApp', (email, senha) => {
-    cy.log(`Email: ${email}`)
-    cy.log(`Senha: ${senha}`)
     cy.request({
         method: 'POST',
         url: 'api/login',
@@ -49,6 +47,7 @@ Cypress.Commands.add('loginApp', (email, senha) => {
         expect(response.status).to.equal(200)
         //Criar o estado da aplicação 
         window.localStorage.setItem('authToken', response.body.token)
+        window.localStorage.setItem('isAdmin', true)
 
         cy.visit('dashboard.html')
         cy.get('h4').should('contain', 'Olá')
@@ -60,4 +59,12 @@ Cypress.Commands.add('loginToken', (token) => {
     window.localStorage.setItem('authToken', token)
     cy.visit('dashboard.html')
     cy.get('h4').should('contain', 'Olá')
+})
+
+Cypress.Commands.add('adicionarLivro', (titulo, autor, categoria) => {
+    cy.get('.btn-success').click()
+    cy.get('#book-title').clear().type(titulo, { force: true })
+    cy.get('#book-author').clear().type(autor)
+    cy.get('#book-category').select(categoria)
+    cy.get('#save-book-btn').click()
 })
