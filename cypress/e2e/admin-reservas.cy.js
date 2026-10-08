@@ -5,7 +5,7 @@ describe('Funcionalidade: Administrar Reservas de livros', () => {
         //cy.loginToken(Cypress.env('TOKEN_COMUM'))
     })
 
-    it.only('Deve exibir as reservas via intercept', () => {
+    it('Deve exibir as reservas via intercept', () => {
         cy.fixture('reservas').then((dadosReservas) => {
             cy.intercept('GET', 'api/reservations', {
                 statusCode: 200,

@@ -20,7 +20,7 @@ describe('Funcionalidade: Catalogo de Livros', () => {
     //Nesse teste foi identificado um BUG na aplicação onde ao tentar salvar um registro já existente
     //é esperado que seja exibida uma mensagem de erro na UI, porém esta sendo exibida uma mensagem
     //de sucesso.
-    it('Deve tentar cadastrar um livro já existente como admin - Cenário negatio + app actions', () => {
+    it('Deve tentar cadastrar um livro já existente como admin - Cenário negativo + app actions', () => {
         cy.fixture('books').then((dadosBooks) => {
             cy.intercept('POST', 'api/books', {
                 statusCode: 400,
